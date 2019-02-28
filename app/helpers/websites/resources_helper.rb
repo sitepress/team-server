@@ -1,0 +1,2 @@
+module Websites::ResourcesHelper
+end

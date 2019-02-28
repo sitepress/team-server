@@ -1,0 +1,17 @@
+%p#notice= notice
+
+%p
+  %b Name:
+  = @website.name
+%p
+  %b File path:
+  = @website.file_path
+%p
+  %b Description:
+  = @website.description
+
+= link_to 'View pages', website_resources_path(@website)
+\|
+= link_to 'Edit', edit_website_path(@website)
+\|
+= link_to 'Back', websites_path

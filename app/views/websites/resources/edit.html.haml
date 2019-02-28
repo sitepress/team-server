@@ -1,0 +1,8 @@
+%h2 Editing #{@resource.request_path}
+
+.editor
+  .editor-source
+    =form_for [@website, @resource] do |f|
+      =f.text_area :source, style: "width: 50rem; height: 60rem;"
+      =f.submit "Save"
+  .editor-preview

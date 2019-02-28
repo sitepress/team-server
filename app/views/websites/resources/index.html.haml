@@ -1,0 +1,17 @@
+%h1 Pages
+%p
+  There are
+  =@website.sitepress.resources.size
+  pages on the website at
+  =@website.sitepress.root_path
+
+%table
+  %thead
+    %tr
+      %th Page
+      %th
+  %tbody
+    - @website.resources.each do |resource|
+      %tr
+        %td= resource.request_path
+        %td= link_to "Edit", edit_website_resource_path(@website, resource)
