@@ -1,4 +1,12 @@
 %h2 Editing #{@resource.request_path}
+
+-if @resource.errors.any?
+  %h3 Errors
+  %ul
+    -@resource.errors.full_messages.each do |message|
+      %li= message
+
+
 =link_to "View", [@website, @resource]
 \|
 =link_to "Back to pages", website_resources_path(@website)

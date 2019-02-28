@@ -8,8 +8,12 @@ class Websites::ResourcesController < ApplicationController
 
   def update
     @resource.source = resource_params.fetch(:source)
-    @resource.save
-    redirect_to [@website, @resource]
+    if @resource.save
+      flash[:success] = "Updated #{@resource.request_path}"
+      redirect_to [:edit, @website, @resource]
+    else
+      render :edit
+    end
   end
 
   def preview
