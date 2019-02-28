@@ -65,6 +65,13 @@ gem "haml-rails", "~> 2.0"
 
 gem "rspec-rails", "~> 3.8"
 
-gem "sitepress-core", "~> 0.1.29"
+gem "sitepress-core", "~> 0.1.29", path: "~/Projects/sitepress/gem"
+# cli has the compiler and project files that we need.
+gem "sitepress-cli", path: "~/Projects/sitepress/gem"
+gem "sitepress-server", path: "~/Projects/sitepress/gem"
+
+# TODO: Relex Thor dependency in CLI so it doesn't blow up rails.
+gem "thor", "~> 0.19.0"
+
 gem "markdown-rails"
 gem "redcarpet"
