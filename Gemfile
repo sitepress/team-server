@@ -66,3 +66,5 @@ gem "haml-rails", "~> 2.0"
 gem "rspec-rails", "~> 3.8"
 
 gem "sitepress-core", "~> 0.1.29"
+gem "markdown-rails"
+gem "redcarpet"

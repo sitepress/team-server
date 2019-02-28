@@ -12,6 +12,10 @@ class Websites::ResourcesController < ApplicationController
     redirect_to [@website, @resource]
   end
 
+  def preview
+    render_page @resource.sitepress
+  end
+
   private
     def resource_params
       params.require(:resource).permit(:source)
@@ -23,5 +27,12 @@ class Websites::ResourcesController < ApplicationController
 
     def load_resource
       @resource = @website.find_resource_by_id params[:id]
+    end
+
+    def render_page(page)
+      render inline: page.body,
+        type: page.asset.template_extensions.last,
+        layout: page.data.fetch("layout", nil),
+        content_type: page.mime_type.to_s
     end
 end

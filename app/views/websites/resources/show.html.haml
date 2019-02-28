@@ -1,4 +1,7 @@
 %h2 Viewing #{@resource.request_path}
 =link_to "Edit", [:edit, @website, @resource]
+\|
+=link_to "Back to pages", website_resources_path(@website)
+
 %pre
   %source=@resource.source

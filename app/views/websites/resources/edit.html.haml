@@ -1,8 +1,12 @@
 %h2 Editing #{@resource.request_path}
+=link_to "View", [@website, @resource]
+\|
+=link_to "Back to pages", website_resources_path(@website)
 
 .editor
-  .editor-source
+  .editor--source
     =form_for [@website, @resource] do |f|
-      =f.text_area :source, style: "width: 50rem; height: 60rem;"
+      =f.text_area :source, rows: 40
       =f.submit "Save"
-  .editor-preview
+  .editor--preview
+    %iframe{src: preview_website_resource_path(@website, @resource)}

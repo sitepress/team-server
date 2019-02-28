@@ -1,10 +1,10 @@
 class Resource
   include ActiveModel::Model
 
-  delegate :request_path, :body, :data, to: :sitepress_resource
+  delegate :request_path, :body, :data, to: :sitepress
 
-  def initialize(sitepress_resource)
-    @sitepress_resource = sitepress_resource
+  def initialize(sitepress)
+    @sitepress = sitepress
   end
 
   def to_param
@@ -24,15 +24,19 @@ class Resource
   end
 
   def save
-    File.write asset.path, source
+    File.write file_path, source
+  end
+
+  def file_path
+    asset.path
+  end
+
+  def sitepress
+    @sitepress
   end
 
   private
-    def sitepress_resource
-      @sitepress_resource
-    end
-
     def asset
-      sitepress_resource.asset
+      sitepress.asset
     end
 end
