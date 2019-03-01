@@ -75,3 +75,5 @@ gem "thor", "~> 0.19.0"
 
 gem "markdown-rails"
 gem "redcarpet"
+
+gem "docker-api", "~> 1.34"

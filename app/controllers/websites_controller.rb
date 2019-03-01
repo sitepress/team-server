@@ -69,6 +69,15 @@ class WebsitesController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def website_params
-      params.require(:website).permit(:name, :file_path, :description)
+      params.require(:website).permit(
+        :name,
+        :file_path,
+        :description,
+        :docker_image_name,
+        :docker_container_cmd,
+        :docker_container_volume_file_path,
+        :docker_container_port,
+        :docker_host_port
+      )
     end
 end

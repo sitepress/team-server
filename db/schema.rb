@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_02_27_202326) do
+ActiveRecord::Schema.define(version: 2019_02_28_212046) do
 
   create_table "websites", force: :cascade do |t|
     t.string "name"
@@ -18,6 +18,11 @@ ActiveRecord::Schema.define(version: 2019_02_27_202326) do
     t.text "description"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "docker_image_name"
+    t.string "docker_container_cmd"
+    t.string "docker_container_volume_file_path"
+    t.integer "docker_container_port"
+    t.integer "docker_host_port"
   end
 
 end

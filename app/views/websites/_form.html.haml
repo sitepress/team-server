@@ -15,5 +15,21 @@
   .field
     = f.label :description
     = f.text_area :description
+  .field
+    = f.label :docker_image_name
+    = f.text_field :docker_image_name
+  .field
+    = f.label :docker_container_cmd
+    = f.text_field :docker_container_cmd
+  .field
+    = f.label :docker_container_volume_file_path
+    = f.text_field :docker_container_volume_file_path
+  .field
+    = f.label :docker_container_port
+    = f.text_field :docker_container_port
+  .field
+    = f.label :docker_host_port
+    = f.text_field :docker_host_port
+
   .actions
     = f.submit 'Save'

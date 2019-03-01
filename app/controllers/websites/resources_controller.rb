@@ -9,7 +9,7 @@ class Websites::ResourcesController < ApplicationController
   def update
     @resource.source = resource_params.fetch(:source)
     if @resource.save
-      flash[:success] = "Updated #{@resource.request_path}"
+      flash[:success] = "Updated #{@resource.file_path}"
       redirect_to [:edit, @website, @resource]
     else
       render :edit
@@ -17,7 +17,7 @@ class Websites::ResourcesController < ApplicationController
   end
 
   def preview
-    render_sitepress_resource @resource
+    redirect_to @website.preview_url(params[:id]).to_s
   end
 
   private
@@ -42,11 +42,11 @@ class Websites::ResourcesController < ApplicationController
     # end
 
     # Sitepress renderer
-    def render_sitepress_resource(resource)
-      render inline: @website.renderer(resource).render,
-        type: resource.sitepress.asset.template_extensions.last,
-        content_type: resource.sitepress.mime_type.to_s
-    end
+    # def render_sitepress_resource(resource)
+    #   render inline: @website.renderer(resource).render,
+    #     type: resource.sitepress.asset.template_extensions.last,
+    #     content_type: resource.sitepress.mime_type.to_s
+    # end
 
     def project
       Sitepress::Project.new config_file: @website.path.join(Project::DEFAULT_CONFIG_FILE)

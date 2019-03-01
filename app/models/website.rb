@@ -1,38 +1,46 @@
 class Website < ApplicationRecord
-  # delegate :resources, to: :sitepress
-
-  def sitepress
-    @_sitepress ||= project.site.tap do |s|
-      # Path loaded from a project is relative to its root; this
-      # should make it relative to the project path.
-      # TODO: Make this work at the project or site level so this is less
-      # hacky and brittle.
-      s.root_path = file_path
-    end
-  end
+  ROOT_PATH = Pathname.new("/").freeze
 
   def resources
     Enumerator.new do |y|
-      sitepress.resources.each do |resource|
-        y << Resource.new(resource)
+      files.each do |path|
+        y << Resource.new(path) if File.file? path
       end
     end
   end
 
-  def find_resource_by_id(request_path)
-    Resource.new sitepress.get CGI.unescape request_path
+  def find_resource_by_id(file_path_param)
+    # TODO: Need to make sure this path can't go
+    # beyond the root set by the website!
+    raise SecurityError unless Rails.env.development?
+
+    file_path = CGI.unescape file_path_param
+
+    Resource.new(file_path).tap do |r|
+      raise ActiveRecord::NotFoundError unless r.persisted?
+    end
   end
 
-  def project
-    Sitepress::Project.new config_file: config_file_path
+  def preview_url(file_path_param = nil)
+    URI.parse("http://0.0.0.0:#{docker_host_port}").tap do |url|
+      if file_path_param
+        preview_file_path = Pathname.new CGI.unescape file_path_param
+        relative_path = preview_file_path.relative_path_from(file_path)
+        # Remove extensions, etc.
+        no_extensions_path = relative_path.basename(relative_path.extname)
+        absolute_path = ROOT_PATH.join(no_extensions_path)
+
+        url.path = absolute_path.to_s
+      end
+    end
   end
 
-  def renderer(resource)
-    Sitepress::RenderingContext.new(resource: resource.sitepress, site: self.sitepress)
+  def docker
+    @_docker_website ||= DockerWebsite.new(self)
   end
 
   private
-    def config_file_path
-      Pathname.new(file_path).join(Sitepress::Project::DEFAULT_CONFIG_FILE)
+    def files
+      Dir.glob(Pathname.new(file_path).join("**/*.html*"))
     end
 end

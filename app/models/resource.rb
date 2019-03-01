@@ -1,24 +1,23 @@
 class Resource
   include ActiveModel::Model
-  attr_reader :sitepress
-  delegate :request_path, :body, :data, to: :sitepress
+  attr_reader :file_path
 
   validate :validated_wellformed_asset
 
-  def initialize(sitepress)
-    @sitepress = sitepress
+  def initialize(file_path)
+    @file_path = Pathname.new(file_path)
   end
 
   def to_param
-    CGI.escape request_path
+    CGI.escape file_path.to_s
   end
 
   def persisted?
-    asset.exists?
+    file_path.exist?
   end
 
   def source
-    @_source ||= File.read asset.path
+    @_source ||= File.read file_path
   end
 
   def source=(source)
@@ -29,15 +28,7 @@ class Resource
     File.write file_path, source if valid?
   end
 
-  def file_path
-    asset.path
-  end
-
   private
-    def asset
-      sitepress.asset
-    end
-
     # Just try parsing it, blurg, this sucks, but it will do for now.
     def validated_wellformed_asset
       parser = Sitepress::Frontmatter.new(source)
