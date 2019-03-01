@@ -1,4 +1,6 @@
 class DockerWebsite
+  ROOT_NAMESPACE = "editor"
+
   attr_reader :website
   delegate :start, :stop, :restart, :kill, to: :container
 
@@ -10,11 +12,15 @@ class DockerWebsite
     # TODO: Name a docker repo and have a `find_or_create_container`
     # method that tries to make this act more like a singleton, so that
     # we have only one instance running at a time.
-    @_container ||= Docker::Container.create(**docker_config)
+    @_container ||= Docker::Container.get(docker_container_name) || Docker::Container.create(name: docker_container_name, **docker_config)
   end
 
   def info
     container.json
+  end
+
+  def docker_container_name
+    [ROOT_NAMESPACE, website.docker_image_name].join("_")
   end
 
   private
