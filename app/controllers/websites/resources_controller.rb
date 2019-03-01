@@ -32,23 +32,4 @@ class Websites::ResourcesController < ApplicationController
     def load_resource
       @resource = @website.find_resource_by_id params[:id]
     end
-
-    # Rails renderer
-    # def render_page(page)
-    #   render inline: page.body,
-    #     type: page.asset.template_extensions.last,
-    #     layout: page.data.fetch("layout", nil),
-    #     content_type: page.mime_type.to_s
-    # end
-
-    # Sitepress renderer
-    # def render_sitepress_resource(resource)
-    #   render inline: @website.renderer(resource).render,
-    #     type: resource.sitepress.asset.template_extensions.last,
-    #     content_type: resource.sitepress.mime_type.to_s
-    # end
-
-    def project
-      Sitepress::Project.new config_file: @website.path.join(Project::DEFAULT_CONFIG_FILE)
-    end
 end
