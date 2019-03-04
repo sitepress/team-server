@@ -1,5 +1,12 @@
 class Website < ApplicationRecord
-  ROOT_PATH = Pathname.new("/").freeze
+  # Root web server path
+  PREVIEW_SERVER_ROOT_PATH = Pathname.new("/").freeze
+
+  # Preview server host
+  PREVIEW_SERVER_HOST = "0.0.0.0".freeze
+
+  # Preview server scheme
+  PREVIEW_SERVER_SCHEME = "http".freeze
 
   def resources
     Enumerator.new do |y|
@@ -22,13 +29,13 @@ class Website < ApplicationRecord
   end
 
   def preview_url(file_path_param = nil)
-    URI.parse("http://0.0.0.0:#{docker_host_port}").tap do |url|
+    URI.parse("#{PREVIEW_SERVER_SCHEME}://#{PREVIEW_SERVER_HOST}:#{docker_host_port}").tap do |url|
       if file_path_param
         preview_file_path = Pathname.new CGI.unescape file_path_param
         relative_path = preview_file_path.relative_path_from(file_path)
         # Remove extensions, etc.
         no_extensions_path = relative_path.basename(relative_path.extname)
-        absolute_path = ROOT_PATH.join(no_extensions_path)
+        absolute_path = PREVIEW_SERVER_ROOT_PATH.join(no_extensions_path)
 
         url.path = absolute_path.to_s
       end
