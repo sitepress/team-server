@@ -77,3 +77,5 @@ gem "markdown-rails"
 gem "redcarpet"
 
 gem "docker-api", "~> 1.34"
+
+gem "simple_form", "~> 4.1"

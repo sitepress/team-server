@@ -10,7 +10,19 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_02_28_212046) do
+ActiveRecord::Schema.define(version: 2019_03_04_213713) do
+
+  create_table "docker_preview_servers", force: :cascade do |t|
+    t.integer "website_id"
+    t.string "image_name"
+    t.string "container_cmd"
+    t.string "container_volume_path"
+    t.integer "container_port"
+    t.integer "host_port"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["website_id"], name: "index_docker_preview_servers_on_website_id"
+  end
 
   create_table "websites", force: :cascade do |t|
     t.string "name"
@@ -18,11 +30,6 @@ ActiveRecord::Schema.define(version: 2019_02_28_212046) do
     t.text "description"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.string "docker_image_name"
-    t.string "docker_container_cmd"
-    t.string "docker_container_volume_file_path"
-    t.integer "docker_container_port"
-    t.integer "docker_host_port"
   end
 
 end

@@ -1,0 +1,31 @@
+%h1 Listing docker_preview_servers
+
+%table
+  %thead
+    %tr
+      %th Website
+      %th Image name
+      %th Container cmd
+      %th Container volume path
+      %th Container port
+      %th Host port
+      %th
+      %th
+      %th
+
+  %tbody
+    - @docker_preview_servers.each do |docker_preview_server|
+      %tr
+        %td= docker_preview_server.website
+        %td= docker_preview_server.image_name
+        %td= docker_preview_server.container_cmd
+        %td= docker_preview_server.container_volume_path
+        %td= docker_preview_server.container_port
+        %td= docker_preview_server.host_port
+        %td= link_to 'Show', docker_preview_server
+        %td= link_to 'Edit', edit_docker_preview_server_path(docker_preview_server)
+        %td= link_to 'Destroy', docker_preview_server, method: :delete, data: { confirm: 'Are you sure?' }
+
+%br
+
+= link_to 'New Docker preview server', new_docker_preview_server_path

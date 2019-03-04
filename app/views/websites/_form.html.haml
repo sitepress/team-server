@@ -1,35 +1,12 @@
-= form_for @website do |f|
-  - if @website.errors.any?
-    #error_explanation
-      %h2= "#{pluralize(@website.errors.count, "error")} prohibited this website from being saved:"
-      %ul
-        - @website.errors.full_messages.each do |message|
-          %li= message
+-# frozen_string_literal: true
+= simple_form_for @website do |f|
+  = f.error_notification
+  = f.error_notification message: f.object.errors[:base].to_sentence if f.object.errors[:base].present?
 
-  .field
-    = f.label :name
-    = f.text_field :name
-  .field
-    = f.label :file_path
-    = f.text_field :file_path
-  .field
-    = f.label :description
-    = f.text_area :description
-  .field
-    = f.label :docker_image_name
-    = f.text_field :docker_image_name
-  .field
-    = f.label :docker_container_cmd
-    = f.text_field :docker_container_cmd
-  .field
-    = f.label :docker_container_volume_file_path
-    = f.text_field :docker_container_volume_file_path
-  .field
-    = f.label :docker_container_port
-    = f.text_field :docker_container_port
-  .field
-    = f.label :docker_host_port
-    = f.text_field :docker_host_port
+  .form-inputs
+    =f.input :name
+    =f.input :file_path
+    =f.input :description, as: :text
 
-  .actions
-    = f.submit 'Save'
+  .form-actions
+    =f.submit

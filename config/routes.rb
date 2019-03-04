@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resources :docker_preview_servers
   resources :websites do
     scope module: :websites do
       resources :resources, constraints: { id: /[^\/]+/ } do

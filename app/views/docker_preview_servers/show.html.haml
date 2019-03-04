@@ -1,0 +1,24 @@
+%p#notice= notice
+
+%p
+  %b Website:
+  = @docker_preview_server.website
+%p
+  %b Image name:
+  = @docker_preview_server.image_name
+%p
+  %b Container cmd:
+  = @docker_preview_server.container_cmd
+%p
+  %b Container volume path:
+  = @docker_preview_server.container_volume_path
+%p
+  %b Container port:
+  = @docker_preview_server.container_port
+%p
+  %b Host port:
+  = @docker_preview_server.host_port
+
+= link_to 'Edit', edit_docker_preview_server_path(@docker_preview_server)
+\|
+= link_to 'Back', docker_preview_servers_path
