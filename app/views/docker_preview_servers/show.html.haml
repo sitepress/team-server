@@ -18,6 +18,12 @@
 %p
   %b Host port:
   = @docker_preview_server.host_port
+%p
+  %b Docker container name:
+  = @docker_preview_server.docker_container_name
+%p
+  %b Docker info:
+  = @docker_preview_server.info.inspect
 
 = link_to 'Edit', edit_docker_preview_server_path(@docker_preview_server)
 \|

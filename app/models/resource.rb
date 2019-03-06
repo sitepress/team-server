@@ -1,11 +1,12 @@
 class Resource
   include ActiveModel::Model
-  attr_reader :file_path
+  attr_reader :file_path, :website
 
   validate :validated_wellformed_asset
 
-  def initialize(file_path)
+  def initialize(file_path: , website:)
     @file_path = Pathname.new(file_path)
+    @website = website
   end
 
   def to_param
@@ -26,6 +27,10 @@ class Resource
 
   def save
     File.write file_path, source if valid?
+  end
+
+  def request_path
+    file_path.relative_path_from(website.file_path)
   end
 
   private
